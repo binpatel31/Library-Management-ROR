@@ -1,0 +1,11 @@
+<h1>This is just placeholder add book variable instead of librarian </h1>
+<table>
+<% if !@librarian.nil? then @librarian.each do |recipe| %>
+  <tr>
+    <td><%= recipe.name %></td>
+    <td><%= recipe.email %></td>
+    <td><%= recipe.library %></td>
+  </tr>s
+<% end %>
+<% end %>
+</table>
