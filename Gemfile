@@ -16,7 +16,7 @@ group :production do
   gem 'pg'
 end
 
-gem 'sqlite3'
+
 gem 'devise'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
