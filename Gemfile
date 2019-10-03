@@ -7,12 +7,14 @@ ruby '2.6.3'
 gem 'rails', '~> 5.2.3'
 
 group :development do
-gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
+gem 'sqlite3', '~> 1.4.1'
 end
 
-group :production do
-	gem 'pg'
+group :test do
+gem 'sqlite3', '~> 1.4.1'
 end
+
+
 
 gem 'devise'
 # Use Puma as the app server
@@ -68,3 +70,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+group :production do
+	gem 'pg'
+end
