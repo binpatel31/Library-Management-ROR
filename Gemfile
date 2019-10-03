@@ -5,17 +5,12 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
-# Use sqlite3 as the database for Active Record
 
+gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
 
-#group :devlopment, :test do
-#  gem 'sqlite3'
-#end
-
-#group :production do
-gem 'pg'
-#end
-
+group :production do
+	gem 'pg'
+end
 
 gem 'devise'
 # Use Puma as the app server

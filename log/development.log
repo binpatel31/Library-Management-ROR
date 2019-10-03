@@ -6657,3 +6657,196 @@ Processing by SignUpController#index as HTML
 Completed 200 OK in 23ms (Views: 18.7ms | ActiveRecord: 0.0ms)
 
 
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (252.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "admins"[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (200.0ms)[0m  [1m[35mCREATE TABLE "admins" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar, "email" varchar, "password_digest" varchar)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (161.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "bookmarks"[0m
+  ↳ db/schema.rb:23
+  [1m[35m (184.4ms)[0m  [1m[35mCREATE TABLE "bookmarks" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "ISBN" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:23
+  [1m[35m (162.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "books"[0m
+  ↳ db/schema.rb:30
+  [1m[35m (236.3ms)[0m  [1m[35mCREATE TABLE "books" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "ISBN" varchar, "title" varchar(200), "author" varchar(70), "language" varchar(20), "published" varchar(4), "edition" varchar(4), "library_id" varchar(10), "image" varchar(500), "subject" varchar(100), "summary" varchar(1000), "specialcollection" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "copies" varchar(6))[0m
+  ↳ db/schema.rb:30
+  [1m[35m (118.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_books_on_ISBN" ON "books" ("ISBN")[0m
+  ↳ db/schema.rb:30
+  [1m[35m (127.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "holds"[0m
+  ↳ db/schema.rb:48
+  [1m[35m (181.3ms)[0m  [1m[35mCREATE TABLE "holds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "ISBN" varchar, "library_id" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:48
+  [1m[35m (169.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "librarians"[0m
+  ↳ db/schema.rb:56
+  [1m[35m (220.5ms)[0m  [1m[35mCREATE TABLE "librarians" ("librarian_id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "name" varchar, "library_id" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "is_valid" boolean)[0m
+  ↳ db/schema.rb:56
+  [1m[35m (136.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_librarians_on_email" ON "librarians" ("email")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (148.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "libraries"[0m
+  ↳ db/schema.rb:67
+  [1m[35m (135.5ms)[0m  [1m[35mCREATE TABLE "libraries" ("library_id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(200), "university_id" varchar(100), "location" varchar(300), "max_days" varchar(10), "fines" varchar(10), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:67
+  [1m[35m (89.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "logins"[0m
+  ↳ db/schema.rb:77
+  [1m[35m (97.3ms)[0m  [1m[35mCREATE TABLE "logins" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:77
+  [1m[35m (93.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "students"[0m
+  ↳ db/schema.rb:84
+  [1m[35m (170.5ms)[0m  [1m[35mCREATE TABLE "students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "educational_level" varchar, "university_id" varchar, "maximum_book_limit" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:84
+  [1m[35m (110.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_students_on_email" ON "students" ("email")[0m
+  ↳ db/schema.rb:84
+  [1m[35m (105.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "universities"[0m
+  ↳ db/schema.rb:99
+  [1m[35m (113.2ms)[0m  [1m[35mCREATE TABLE "universities" ("university_id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:99
+  [1m[35m (85.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_universities_on_name" ON "universities" ("name")[0m
+  ↳ db/schema.rb:99
+  [1m[35m (118.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  ↳ db/schema.rb:106
+  [1m[35m (122.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "email" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "is_valid" boolean)[0m
+  ↳ db/schema.rb:106
+  [1m[35m (106.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  ↳ db/schema.rb:106
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "admins"[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (132.4ms)[0m  [1m[35mCREATE TABLE "admins" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar, "email" varchar, "password_digest" varchar)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "bookmarks"[0m
+  ↳ db/schema.rb:23
+  [1m[35m (93.0ms)[0m  [1m[35mCREATE TABLE "bookmarks" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "ISBN" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:23
+  [1m[35m (1.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "books"[0m
+  ↳ db/schema.rb:30
+  [1m[35m (138.3ms)[0m  [1m[35mCREATE TABLE "books" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "ISBN" varchar, "title" varchar(200), "author" varchar(70), "language" varchar(20), "published" varchar(4), "edition" varchar(4), "library_id" varchar(10), "image" varchar(500), "subject" varchar(100), "summary" varchar(1000), "specialcollection" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "copies" varchar(6))[0m
+  ↳ db/schema.rb:30
+  [1m[35m (146.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_books_on_ISBN" ON "books" ("ISBN")[0m
+  ↳ db/schema.rb:30
+  [1m[35m (1.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "holds"[0m
+  ↳ db/schema.rb:48
+  [1m[35m (120.6ms)[0m  [1m[35mCREATE TABLE "holds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "ISBN" varchar, "library_id" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:48
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "librarians"[0m
+  ↳ db/schema.rb:56
+  [1m[35m (120.9ms)[0m  [1m[35mCREATE TABLE "librarians" ("librarian_id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "name" varchar, "library_id" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "is_valid" boolean)[0m
+  ↳ db/schema.rb:56
+  [1m[35m (130.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_librarians_on_email" ON "librarians" ("email")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (1.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "libraries"[0m
+  ↳ db/schema.rb:67
+  [1m[35m (126.5ms)[0m  [1m[35mCREATE TABLE "libraries" ("library_id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(200), "university_id" varchar(100), "location" varchar(300), "max_days" varchar(10), "fines" varchar(10), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:67
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "logins"[0m
+  ↳ db/schema.rb:77
+  [1m[35m (127.5ms)[0m  [1m[35mCREATE TABLE "logins" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:77
+  [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "students"[0m
+  ↳ db/schema.rb:84
+  [1m[35m (102.0ms)[0m  [1m[35mCREATE TABLE "students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "educational_level" varchar, "university_id" varchar, "maximum_book_limit" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:84
+  [1m[35m (115.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_students_on_email" ON "students" ("email")[0m
+  ↳ db/schema.rb:84
+  [1m[35m (1.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "universities"[0m
+  ↳ db/schema.rb:99
+  [1m[35m (179.4ms)[0m  [1m[35mCREATE TABLE "universities" ("university_id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:99
+  [1m[35m (107.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_universities_on_name" ON "universities" ("name")[0m
+  ↳ db/schema.rb:99
+  [1m[35m (1.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  ↳ db/schema.rb:106
+  [1m[35m (114.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "email" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "is_valid" boolean)[0m
+  ↳ db/schema.rb:106
+  [1m[35m (118.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  ↳ db/schema.rb:106
+  [1m[35m (139.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (128.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20191002190938)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (163.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20190922071246),
+(20190922083035),
+(20190922210258),
+(20190923024906),
+(20190928004246),
+(20190928004622),
+(20190928010731),
+(20190928011202),
+(20190928211534),
+(20190928234034),
+(20190929004940),
+(20190930164229),
+(20190930192014),
+(20190930194717),
+(20190930203303);
+
+[0m
+  ↳ db/schema.rb:13
+  [1m[35m (114.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (3.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-10-03 02:57:36.055563"], ["updated_at", "2019-10-03 02:57:36.055563"]]
+  ↳ db/schema.rb:13
+  [1m[35m (131.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (1.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Update (3.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2019-10-03 02:57:36.204486"], ["key", "environment"]]
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (154.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ C:/Ruby26-x64/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/seeds.rb:10
+  [1m[36mAdmin Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "admins" WHERE "admins"."email" = ? LIMIT ?[0m  [["email", "dshah11@ncsu.edu"], ["LIMIT", 1]]
+  ↳ db/seeds.rb:10
+  [1m[36mAdmin Create (1.4ms)[0m  [1m[32mINSERT INTO "admins" ("created_at", "updated_at", "name", "email", "password_digest") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2019-10-03 02:57:36.440333"], ["updated_at", "2019-10-03 02:57:36.440333"], ["name", "administrator"], ["email", "dshah11@ncsu.edu"], ["password_digest", "$2b$10$mm9uguS51L76GbEP4mn2wuA4FVoDil2BE7QFF3j4bhThIhwBR8IaC"]]
+  ↳ db/seeds.rb:10
+  [1m[35m (136.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/seeds.rb:10
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
