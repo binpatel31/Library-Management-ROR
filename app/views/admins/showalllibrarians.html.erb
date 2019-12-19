@@ -1,9 +1,20 @@
-<%= link_to "Admin_HomePage", :controller => "admins", :action => "index" %>
+<% if !session[:admin_id] %>
+  redirect_to root_url
+   <%end%>
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
 
+  <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
+    <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
+  <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
+  <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy"%></a>
+</div>
+<br>
 <style type="text/css">
 td
 {
-    padding:0 1px 0 0px;
+    padding:0 41px 0 0px;
+  text-align: center;
 
 }
 th
@@ -14,7 +25,7 @@ th
 </style>
 
 <h2>List of all librarians</h2>
-<table>
+  <table border="1px">
   <th>Name:</th>
   <th>Email:</th>
   <th>Librarian University:</th>
@@ -23,8 +34,14 @@ th
   <tr>
     <td><%=librarian.name %></td>
     <td><%=librarian.email %></td>
-    <td> <%=librarian.library_id%></td>
-    <td><%= link_to "Update", :controller => "admins", :action => "editlibrarian" , :librarian_id => librarian.librarian_id %><td>
+    <%@library = Library.find_by_library_id(librarian.library_id) %>
+    <%@university = University.find_by_university_id(@library[:university_id]) %>
+    <td> <%=@university[:name]%></td>
+    <td><%= @library[:name] %></td>
+
+   <td><%= link_to "Update", :controller => "admins", :action => "editlibrarian" , :librarian_id => librarian.librarian_id %><td>
+    <td><%= link_to "Delete", :controller => "admins", :action => "deletelibrarian", :librarian_id => librarian.librarian_id %><td>
+
   </tr>
 <%end %>
 </table>

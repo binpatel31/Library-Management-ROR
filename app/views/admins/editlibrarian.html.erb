@@ -29,12 +29,20 @@
   </div>
   <br/>
 
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :library_id %>
-  </div>
 
   <br/>
+
+    <div>
+      <% @libraries = Library.all %>
+      <!--    <%#= f.label :lib %>
+    Library: <%#= select_tag :lib, options_from_collection_for_select(@library, "id", "name") %>-->
+      Library: <select name="libr">
+      <%= @libraries.each do |lib| %>
+        <option value="<%= lib.id %>"><%= lib.name %></option>
+      <% end %>
+    </select>
+    </div>
+    <br>
 
   <div class="action">
     <%= f.submit "Confirm Changes" %>

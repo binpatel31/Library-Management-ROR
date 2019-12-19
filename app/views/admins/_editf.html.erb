@@ -1,3 +1,19 @@
+<% if !session[:admin_id] 
+  redirect_to root_url end%>
+
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
+  <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
+  <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
+  <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
+  <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy"%></a>
+ </div>
+
+<br>
+<br>
+<br>
+
+
 <%= form_for @admin do |f| %>
 
 <% if @admin.errors.any? %>
@@ -26,19 +42,6 @@
   
   <br />
   
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-  
-  <br>
-  
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-
-  <br />
   
  
   <div class="action">

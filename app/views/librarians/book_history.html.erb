@@ -6,7 +6,26 @@
 <% if session[:role] != 'librarian' and session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
-  <%=render 'header' %>
+  <% if session[:role] == 'librarian' %>
+    <%= render 'header' %>
+  <% end %>
+  <% if session[:role] == 'admin' %>
+   <div class="topnav">
+  <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
+  <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
+  <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
+  <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
+  <a><%= link_to "Create Student Account", :controller => "students", :action => "new"%></a>
+  <a><%= link_to "Create Librarian Account", :controller => "librarians", :action => "new"%></a>
+  <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy"%></a>
+ </div>
+
+
+  <% end %>
+
+<br>
+
+
 
   <h1>History of books</h1>
   <table border="1px">
@@ -26,14 +45,23 @@
         <tr>
           <td><%= hold.ISBN %></td>
           <% @student = Student.find_by_id(hold.student_id) %>
-          <td><%= @student[:name] %></td>
+          <% if !@student.nil? %>
+            <td><%= @student[:name] %></td>
+          <% end %>
           <% @book = Book.find_by_ISBN(hold.ISBN) %>
-          <td><%= @book[:title] %></td>
+          <% if !@book.nil? %>
+
+            <td><%= @book[:title] %></td>
+          <% end %>
           <% if session[:role] == 'admin' %>
             <% @library = Library.find_by_library_id(@book[:library_id]) %>
-            <td><%= @library[:name] %></td>
+            <% if !@library.nil? %>
+              <td><%= @library[:name] %></td>
+            <% end %>
             <% @university = University.find_by_university_id(@library[:university_id]) %>
-            <td><%= @university[:name] %></td>
+            <% if !@university.nil? %>
+              <td><%= @university[:name] %></td>
+            <% end %>
           <% end %>
           <td><%= hold.checkout_date %></td>
           <td><%= hold.expected_date %></td>
@@ -62,14 +90,22 @@
         <tr>
           <td><%= returned.ISBN %></td>
           <% @student = Student.find_by_id(returned.student_id) %>
-          <td><%= @student[:name] %></td>
+          <% if !@student.nil? %>
+            <td><%= @student[:name] %></td>
+          <% end %>
           <% @book = Book.find_by_ISBN(returned.ISBN) %>
-          <td><%= @book[:title] %></td>
+          <% if !@book.nil? %>
+            <td><%= @book[:title] %></td>
+          <% end %>
           <% if session[:role] == 'admin' %>
             <% @library = Library.find_by_library_id(@book[:library_id]) %>
-            <td><%= @library[:name] %></td>
+            <% if !@library.nil? %>
+              <td><%= @library[:name] %></td>
+            <% end %>
             <% @university = University.find_by_university_id(@library[:university_id]) %>
-            <td><%= @university[:name] %></td>
+            <% if !@university.nil? %>
+              <td><%= @university[:name] %></td>
+            <% end %>
           <% end %>
           <td><%= returned.checkout_date %></td>
           <td><%= returned.expected_date %></td>
@@ -98,26 +134,71 @@
         <tr>
           <td><%= overdue.ISBN %></td>
           <% @student = Student.find_by_id(overdue.student_id) %>
-          <td><%= @student[:name] %></td>
+          <% if !@student.nil? %>
+            <td><%= @student[:name] %></td>
+          <% end %>
           <% @book = Book.find_by_ISBN(overdue.ISBN) %>
-          <td><%= @book[:title] %></td>
+          <% if !@book.nil? %>
+            <td><%= @book[:title] %></td>
+          <% end %>
           <% if session[:role] == 'admin' %>
             <% @library = Library.find_by_library_id(@book[:library_id]) %>
-            <td><%= @library[:name] %></td>
+            <% if !@library.nil? %>
+              <td><%= @library[:name] %></td>
+            <% end %>
             <% @university = University.find_by_university_id(@library[:university_id]) %>
-            <td><%= @university[:name] %></td>
+            <% if !@university.nil? %>
+              <td><%= @university[:name] %></td>
+            <% end %>
           <% end %>
           <td><%= overdue.checkout_date %></td>
           <td><%= overdue.expected_date %></td>
           <td><%= overdue.return_date %></td>
           <% @days = (Date.parse(overdue.return_date.to_s) -
               Date.parse(overdue.expected_date.to_s)).to_i %>
-          <%@fine = @library[:fines] %>
+          <% @fine = @library[:fines] %>
           <td><%= @days * @fine.to_f %></td>
         </tr>
       <% end %>
     <% end %>
 
+  </table>
+
+  <table border="1px">
+    <h3>Rejected Requests</h3>
+    <th>ISBN</th>
+    <th>Student Name</th>
+    <th>Book Name</th>
+    <% if session[:role] == 'admin' %>
+      <th>Library Name</th>
+      <th>University Name</th>
+    <% end %>
+    <% if !@rejected.nil? then
+         @rejected.each do |reject| %>
+
+        <tr>
+          <td><%= reject.ISBN %></td>
+          <% @student = Student.find_by_id(reject.student_id) %>
+          <% if !@student.nil? %>
+            <td><%= @student[:name] %></td>
+          <% end %>
+          <% @book = Book.find_by_ISBN(reject.ISBN) %>
+          <% if !@book.nil? %>
+            <td><%= @book[:title] %></td>
+          <% end %>
+          <% if session[:role] == 'admin' %>
+            <% @library = Library.find_by_library_id(@book[:library_id]) %>
+            <% if !@library.nil? %>
+              <td><%= @library[:name] %></td>
+            <% end %>
+            <% @university = University.find_by_university_id(@library[:university_id]) %>
+            <% if !@university.nil? %>
+              <td><%= @university[:name] %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
   </table>
 <% end %>
 

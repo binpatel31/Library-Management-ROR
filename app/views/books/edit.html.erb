@@ -1,4 +1,4 @@
-<% if session[:role] != 'librarian' %>
+<% if session[:role] != 'librarian' and session[:role] != 'admin'%>
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
   <h1>Enter Book Details</h1>
@@ -42,12 +42,13 @@
 
     <br/>
 
-    <div class="field">
+   <div class="field">
       <%= f.label :published %>
       <%= f.text_field :published, :required => true %>
     </div>
 
     <br/>
+
 
     <div class="field">
       <%= f.label :edition %>
@@ -71,6 +72,7 @@
       Special Collection
       <%= f.select :specialcollection, ['Yes', 'No'], {:prompt => 'Is special Collection?'}, :required => true %>
     </div>
+
 
     <div class="field">
       <%= f.label :copies %>

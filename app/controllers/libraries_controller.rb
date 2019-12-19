@@ -2,7 +2,7 @@ class LibrariesController < ApplicationController
   private
 
   def library_params
-    params.require(:library).permit(:name, :university, :location, :fines, :max_days)
+    params.require(:library).permit(:name, :location, :fines, :max_days, :university_id)
 
   end
 
@@ -28,12 +28,9 @@ class LibrariesController < ApplicationController
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-      @library = Library.find(params[:id])
-      @university = University.find_by_name(library_params[:university])
+      @library = Library.find_by_library_id(params[:id])
       params = library_params
-      params[:university] = @university
-
-
+      params[:university_id] = @library[:university_id]
       respond_to do |format|
 
         if @library.update_attributes(params)
@@ -47,5 +44,26 @@ class LibrariesController < ApplicationController
       end
     end
   end
+
+  def new
+    @library = Library.new
+  end
+
+  def create
+    if session[:role] != 'admin'
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    else
+      @library = Library.new(library_params)
+      @library[:university_id] = params[:university_id]
+      if @library.save
+        flash[:notice] = "Library created successfully"
+        redirect_to :controller => "admins", :action => "index"
+      else
+        render 'libraries/new'
+      end
+    end
+  end
+
 
 end

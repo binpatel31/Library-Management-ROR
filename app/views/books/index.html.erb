@@ -1,20 +1,31 @@
-<% if session[:student_id] %>
+<% if session[:role] == "student" %>
   <div class="topnav">
     <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
     <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
     <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id]) %></a>
 
     <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout" %></a>
-
   </div>
 <% end %>
 <% if session[:role] == 'librarian' %>
   <div class="topnav">
     <a><%= link_to "Home", :controller => "librarians", :action => "index" %></a>
-    <a><%= link_to "Approval Requests", :controller =>"librarians", :action => "approval_requests"%></a>
-    <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id])%></a>
-    <a><%= link_to "Add a Book", new_book_url%></a>
-    <a><%= link_to "Sign out", :controller => "librarians", :action => "signout"%></a>
+    <a><%= link_to "Approval Requests", :controller => "librarians", :action => "approval_requests" %></a>
+    <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id]) %></a>
+    <a><%= link_to "Add a Book", new_book_url %></a>
+    <a><%= link_to "Sign out", :controller => "librarians", :action => "dest" %></a>
+    <p>Welcome, </p><%=session[:role] %>
+  </div>
+<% end %>
+<% if session[:role] == 'admin' %>
+  <div class="topnav">
+    <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
+
+    <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id]) %></a>
+    <a><%= link_to "Create new Library", :controller => "libraries", :action => "new" %></a>
+    <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
+    <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
+    <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy" %></a>
   </div>
 <% end %>
 
@@ -28,18 +39,18 @@
 <h1>List of Books</h1>
 <br/><br/>
 
+<% if session[:role] == 'student' %>
+  <form action="books/search">
+    By Subject: &nbsp
+    <input type="text" name="subject">
+    By author:
+    <input type="text" name="author">
+    By Title:
+    <input type="text" name="title">
+    <input type="submit" value="Submit">
+  </form>
 
-<form action="books/search">
-  By Subject: &nbsp
-  <input type="text" name="subject">
-  By author:
-  <input type="text" name="author">
-  By Title:
-  <input type="text" name="title">
-  <input type="submit" value="Submit">
-</form>
-
-
+<% end %>
 
 
 <table>
@@ -51,8 +62,9 @@
   <th>Edition</th>
   <th>Subject</th>
   <th>Special Collection</th>
+  <th>Image</th>
   <th>Summary</th>
-  <% if session[:role] == 'librarian' %>
+  <% if session[:role] == 'librarian' or session[:role] == 'admin'%>
     <th>Copies</th>
   <% end %>
   <% if !@book.nil? then
@@ -66,16 +78,16 @@
         <td><%= bk.edition %></td>
         <td><%= bk.subject %></td>
         <td><%= bk.specialcollection %></td>
+        <td><%= link_to 'View Image', :controller => "books", :action => "showimage", :ISBN => bk.ISBN %>
         <td><%= bk.summary %></td>
         &nbsp
-        <% if session[:role] == 'librarian' %>
+        <% if session[:role] == 'librarian' or session[:role] == 'admin' %>
           <td><%= bk.copies %></td>
           <td><%= link_to 'Edit', :controller => "books", :action => "edit", :id => bk.ISBN %></td>
-          <!--      <td><%#= link_to "Delete",:controller => "books", :action => "delete", :id => bk.ISBN%></td>-->
           <td><%= link_to 'Destroy', destroy_path(bk),
                           data: {confirm: 'Are you sure?'} %></td>
           <td><%= link_to 'View', :controller => "books", :action => "show", :id => bk.ISBN %></td>
-        <% else %>
+        <% elsif session[:role] == "student" %>
           <td><%= link_to 'Checkout', :controller => "books", :action => "checkout", :ISBN => bk.ISBN, :library_id => bk.library_id, :bookname => bk.title %></td>
           <td><%= link_to 'Bookmark', :controller => "books", :action => "book_bookmark", :ISBN => bk.ISBN, :library_id => bk.library_id, :bookname => bk.title %></td>
         <% end %>
